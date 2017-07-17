@@ -1,0 +1,470 @@
+%----------- Necessary Style Preamble -----------%
+
+\documentclass[mathserif, 10pt]{beamer} %
+
+\usepackage[framesassubsections]{beamerprosper}
+\usepackage{beamerthemesplit} % Activate for custom appearance
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath, hyperref, subfigure, multirow, rotating}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{esint}
+\usepackage{mathrsfs}
+
+%\usepackage{enumitem}
+
+\usetheme{Frankfurt}
+\usecolortheme{default}
+\usecolortheme[rgb={0.1,0.4,0.0}]{structure} % CSU color style
+%\usecolortheme[rgb={0.541,0.149,0.196}]{structure} % BME color style
+
+\setbeamersize{text margin left=0.5cm}
+\setbeamersize{text margin right=0.5cm}
+
+\setbeamercovered{transparent}
+
+\usepackage{remreset}
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+\makeatletter
+\newcommand\xleftrightarrow[2][]{\ext@arrow 0099{\longleftrightarrowfill@}{#1}{#2}}
+\def\longleftrightarrowfill@{\arrowfill@\leftarrow\relbar\rightarrow}
+\makeatother
+
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+%----------- Math Definitions -----------%
+
+\definecolor{Blue}{rgb}{0,0,1}
+\def\ci{\perp\!\!\!\perp}
+\def\a{\mathbf{a}}
+\def\d{\mathbf{d}}
+\def\e{\mathbf{e}}
+\def\f{\mathbf{f}}
+\def\g{\mathbf{g}}
+\def\b{\mathbf{b}}
+\def\q{\mathbf{q}}
+\def\v{\mathbf{v}}
+\def\x{\mathbf{x}}
+\def\y{\mathbf{y}}
+\def\u{\mathbf{u}}
+%\def\z{\mathbf{\mathfrak{z}}}
+\def\z{\mathbf{z}}
+\def\D{\mathbf{D}}
+\def\S{\mathbf{S}}
+\def\X{\mathbf{X}}
+\def\Z{\mathbf{Z}}
+\def\1{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {1}}}}
+\def\2{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {2}}}}
+\def\3{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {3}}}}
+\def\balph{\boldsymbol\alpha}
+\def\bmu{\boldsymbol\mu}
+\def\btheta{\boldsymbol\theta}
+\def\bomega{\boldsymbol\omega}
+\def\bDelta{\boldsymbol\Delta}
+
+%----------- Title Page Parameters -----------%
+\title[Digital Control \& Digital Filters]{Digital Controls \& Digital Filters \\ Lectures 9 \& 10}
+\author[M.R. Azimi]{M.R. Azimi, Professor}
+\institute[CSU-ECE]{Department of Electrical and Computer Engineering \\ Colorado State University}
+\date{Spring 2017}
+
+\logo{\includegraphics[height=0.5cm]{csu-logo.png}}
+
+\newcommand{\unt}[1]{ \mathrm{\ #1}}
+
+\begin{document}
+
+%----------- slide --------------------------------------------------%
+
+\frame{\titlepage}
+
+
+
+\section{Ideal Sampler}
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\small
+\renewcommand{\theenumi}{\alph{enumi}}
+\frametitle{Relationship between $E(s)$, $E^*(s)$ and $E(j\omega)$}
+
+%\textcolor{red}{Relationship between $E(s)$, $E^*(s)$ and $E(jw)$}\\
+Recall:  $e^*(t) =e(t) \delta_T(t)$ \vspace{.05in}
+
+Using modulation property or convolution in $s$-domain gives:: \\ %\vspace{.1in}
+
+$E^*(s) = \frac{1}{2\pi j} [E(s)* \Delta_T(s)] $\\ \vspace{.1in}
+or
+\vspace{.1in}
+$E^*(s) = \frac{1}{2\pi j} \underbrace{\int_{c-j\omega}^{c+j\omega} E(\xi) \Delta_T(s-\xi)d\xi}_{\makebox{convolution integral}}$ \\
+where $c$:  real number larger than the real parts of poles of $E(s)$ \\ \vspace{.1in}
+\vspace{.1in}
+But
+ $\Delta_T(s) = \mathscr{L}\{\delta_T(t)\}=\mathscr{L}\{\delta(t) + \delta(t-T)+\delta(t-2T)+\hdots \}$ \\ \vspace{.05in}
+$= 1+e^{-Ts}+e^{-2Ts} + \hdots =\frac{1}{1-e^{-Ts}}$
+
+It can be shown using the residue theorem:\\
+$E^*(s) = \sum\limits_{\makebox{poles of $E(\xi)$}} \makebox{Residues of } E(\xi) \frac{1}{1-e^{-T(s-\xi)}}$ \hspace{.1in} \1
+
+\vspace{.1in} Or for $e^{Ts} = z$ \\
+$E(z) = \sum\limits_{\makebox{poles of $E(\xi)$}} \makebox{Residues of } E(\xi) \frac{1}{1-z^{-1}e^{T\xi}}$ \hspace{.1in} \1'
+
+
+
+
+
+}
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\normalsize
+
+\frametitle{Relationship between $E(s)$, $E^*(s)$ and $E(jw)$}
+
+\vspace{-1in}
+\textcolor{red}{Special case:}\\
+If $E(s)$ has real and distinct poles $p_i$'s.  i.e.\\
+$E(s) = \frac{N(s)}{D(s)}, ~~~D(s) = (s-p_1)(s-p_2) \hdots (s-p_N)$\\
+then \1 becomes:\\
+\2  $E^*(s) = \sum\limits_{n=1}^N \frac{N(p_n)}{D'(p_n)}\frac{1}{1-e^{-T(s-p_n)}}$\\
+where \\
+ $D'(s) = \frac{dD(s)}{ds}\implies E(z) = \sum\limits_{n=1}^N \frac{N(p_n)}{D'(p_n)} \frac{1}{1-z^{-1}e^{Tp_n}}$ \2' \\% \vspace{.1in}
+
+Recall: $\Delta_T(s) = \frac{1}{1-e^{-Ts}}$ with poles $e^{-Ts}=1$ \\
+Thus, $Ts = 2\pi jn, \implies s_n = j n \omega_s $ where $\omega_s=\frac{2\pi}{T}$ \\
+This gives \3  $E^*(s) = \frac{1}{T} \sum\limits_{n=-\infty}^{\infty} E(s+jn\omega_s)$\\
+ For $s=j\omega$:\\
+\3'$E^*(\omega) = \frac{1}{T}\sum\limits_{n=-\infty}^{\infty} E(\omega +n \omega_s)$\\% \vspace{.1in}
+\textbf{Note: }Equation \3 is valid only when $e(0) = 0$
+otherwise add $\frac{e(0)}{2}$.
+
+\vspace{-2.1in}
+\hspace{3.1in}
+\includegraphics[width=.3\linewidth]{./Figures/im_poles.png} \vspace{-1in}
+
+
+}
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\normalsize
+
+\frametitle{Examples}
+
+\textcolor{red}{ Example 1:}\\
+
+Let $e(t) = u_s(t)$.  Find $E(z)$ for an ideal sampler with period $T$.\\ \vspace{.05in}
+
+Method 1: (3 steps)\\
+$e^*(t) = \sum\limits_{n=0}^{\infty} e(nT) \delta(t-nT) = \sum\limits_{n=0}^\infty \delta(t-nT)$\\
+$E^*(s) = \mathcal{L}[e^*(t)] = \sum\limits_{n=0}^{\infty} e^{-nTs} = \frac{1}{1-e^{-Ts}}$\\
+$E(z) = E^*(s)|_{s=\frac{1}{T}ln(z)} = \frac{1}{1-z^{-1}} = \frac{z}{z-1}$\\ \vspace{.07in}
+
+Method 2:(1 step)\\
+
+$E(s) = \frac{1}{s} \implies N(s) = 1, D(s) = s, p_1=0,D'(s) = 1$. Now, using Use \2'\\
+
+$E(z) = \frac{1}{D'(0)}\frac{1}{1-z^{-1}e^{T0}} = \frac{1}{1-z^{-1}} = \frac{z}{z-1}$
+
+
+\textcolor{red}{ Example 2:}\\
+
+Given $E(s) = \frac{1}{s^2+3s+2} = \frac{1}{(s+1)(s+2)}$.  Find $E(z)$\\ \vspace{.05in}
+Poles are:  $p_1 = -1$, and  $p_2 = -2$. Also, $N(s) = 1$ and
+$D(s) = s^2+3s+2$. \\
+Using \2'and $D'(s) = 2s+3$, we get, \\
+
+$E(z) = \sum\limits_{n=1}^2 \frac{1}{D'(p_n)}\frac{1}{1-z^{-1}e^{Tp_n}} = \frac{1}{1-z^{-1}e^{-T}}-\frac{1}{1-z^{-1}e^{-2T}}$ \\
+
+
+
+
+}
+
+
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\normalsize
+
+\frametitle{Remarks}
+
+\textcolor{red}{}\\
+
+\begin{enumerate}
+  \item If $G(s) = e^{-Ts}F(s) \implies G^*(s) = e^{-Ts}F^*(s)$\\
+More generally,\\
+$G(s)=E^*(s)F(s) \implies G^*(s) = E^*(s)F^*(s)$
+	\item From \3' we saw that $E^*(\omega) = \frac{1}{T} \sum\limits_{n=-\infty}^{\infty} E(\omega+n\omega_s)$\\
+where $\omega_s = \frac{2\pi}{T}$:  Sampling Frequency\\
+That is, the spectrum of the sampled signal is scaled (by $\frac{1}{T}$) periodic extension of spectrum of $E(\omega)$. \\
+
+\includegraphics[width=.85\linewidth]{./Figures/sample_graph2.png} \\%\vspace{-1in}\\
+
+
+\end{enumerate}
+
+
+}
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\normalsize
+
+\frametitle{Sampling Theorem}
+
+A finite energy signal $e(t)$ having a bandlimited spectrum $E(\omega)$ i.e. $E(\omega)=0 ~~\text{for} ~~|\omega|>|\omega_s|$ can be recovered (reconstructed) from its sampled values $e^*(t)$ (or $e(nT)$) by interpolation if  $\omega_s-\omega_m \ge \omega_m$ or $ \omega_s \ge 2\omega_m $(Nyquist frequency). In this case, no overlap occurs between periodic extensions and $E(\omega)$ or $e(t)$ can be uniquely recovered from $E^*(\omega)$ or $e^*(t)$ using a reconstruction low-pass filter (LPF) with frequency response:\\ \vspace{.1in}
+
+$H(\omega) = \left \{
+\begin{array}{lc}
+	T& \omega \in R\\
+	0& elsewhere
+\end{array} \right.$
+
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+\item For $\omega_s<2\omega_m,~ E^*(\omega)$ is no longer the replication of $E(\omega)$ and thus is no longer recoverable by LPF.  In this case, the upper frequencies in $E(\omega)$ get reflected into the lower frequencies in $E^*(\omega)$.  These frequencies are called ``fold over frequencies'' and the phenomenon is called``aliasing''.  Aliasing can be avoided by pre-filtering the signal first so that its bandlimit is less than one half of the sampling frequency.
+
+\end{enumerate}
+
+
+}
+%Lecture 10 starts here
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\small
+
+\frametitle{Some $s$-plane Properties of $E^*(s)$}
+\vspace{-.8in}
+\textcolor{red}{}\\
+Recall from \3:\\
+$E^*(s) =\frac{1}{T} \sum\limits_{n=-\infty}^\infty E(s+jn\omega_s)$ where $\omega_s = \frac{2\pi}{T}$ is the sampling frequency\\
+
+Let $s=s+jm\omega_s, m\in I$\\
+$E^*(s+jm\omega_s) = \frac{1}{T} \sum\limits_{m=-\infty}^{\infty} E(s+j(m+n)\omega_s)$\\
+Change $m+n \to n'$\\
+$E^*(s+jm\omega_s) = \frac{1}{T}\sum\limits_{n' = -\infty}^\infty E(s+jn'\omega_s) = E^*(s)$ \\ %\vspace{.2in}
+Thus:\\
+\begin{enumerate}
+\item  $E^*(s)$ is periodic with period $\omega_s$\\ \vspace{.1in}
+
+\item If $E(s)$ has a pole at $s=s_i$,\\
+ then $E^*(s)$ has poles at $s_i \pm jm\omega_s$\\
+
+\end{enumerate}
+
+\textcolor{red}{Remark:}\\
+  If Nyquist criterion is satisfied, i.e. poles of $E(s)$ are strictly within primary strip (i.e. $\omega_m < \omega_s/2$), sampling will result these poles to uniquely fold into complementary strips while in case of aliasing they fold back into the primary strip (not reconstructable).
+
+\vspace{-2.2in}
+\hspace{2.7in}
+\includegraphics[width=.4\linewidth]{./Figures/poles_graph2.png}% \vspace{-1in}
+}
+
+
+
+
+\section{Reconstruction}
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\small
+
+\frametitle{Reconstruction using Hold Devices}
+The output of the digital controller must be converted back to a continuous-time signal before applying it to the plant. This
+process is called signal reconstruction with hold devices. Note that ideal filters (infinite interpolation) cannot be used since
+they are not realizable (not causal).
+\begin{center}
+\includegraphics[width=.4\linewidth]{./Figures/hold_diagram.png}
+\end{center} \\
+\textbf{Goal:}  Given $e(nT)~\forall n$, generate $\bar e(t)$ which is as close as possible to $e(t)$\\ \vspace{.1in}
+Expand $e(t)$ at $t=nT$ using Taylor series:\\
+$e(t) = e(nT) + e^{(1)}(nT)(t-nT) + e^{(2)}(nT)\frac{(t-nT)^2}{2!}+\hdots$\\
+where $e^{(i)}(nT) = \frac{d^i e(t)}{dt^i}|_{t=nT}$. Using backward difference method \\ %\vspace{.1in}
+
+$e^{(1)}(nT) = \frac{e(nT) -e((n-1)T)}{T}$. \\
+$e^{(2)}(nT) = \frac{e^{(1)}(nT)-e^{(1)}((n-1)T)}{T} = \frac{e(nT) -2e((n-1)T) +e((n-2)T)}{T^2}$\\ \vspace{.1in}
+That is, we can use all past and present $e(nT)$ samples to generate $\bar e(t)$ at $t=nT$ (interpolation)\\ \vspace{.1in}
+Better approximation $\implies$ more terms $\implies$ more delays $\implies$ more sluggish and less stable
+
+
+
+}
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\small
+
+\frametitle{Zero-Order Hold (ZOH)}
+\vspace{-.5in}
+\begin{itemize}	\item ZOH implements only 1st term in expansion $\bar e(t) = e(nT), ~~~~~ \text{\small{when}}~~  nT \leq t< (n+1)T$ i.e holds the value $e(nT)$ until next sample arrives.
+	\item No memory or delay is required for this hold device.
+
+\end{itemize}
+\includegraphics[width=.5\linewidth]{./Figures/ZOH_diagram.png}  \\
+	 $g_{ho}(t) = u_s(t)-u_s(t-T)$\\
+		$G_{ho}(s) = \mathscr{L}\{g_{ho}(t)\} = \frac{1}{s}-\frac{e^{-Ts}}{s} = \frac{1-e^{-Ts}}{s}$\\
+Let $s=j\omega$\\
+$G_{ho}(j\omega) = \frac{1-e^{-jT\omega}}{j\omega} $\\
+$= \frac{T}{2}\frac{e^{jT\omega/2}-e^{-jT\omega/2}}{j\omega T/2}e^{-j\omega T/2}$ \\
+$ = T \frac{sin \omega T/2}{\omega T/2} e^{-j\omega T/2} =Tsinc(\omega T/2)e^{-j\omega T/2}$\\
+$ =\frac{2\pi}{\omega_s} sinc(\pi \omega /\omega_s)e^{-j \pi \omega/\omega_s}$\\
+
+$|G_{ho}(j\omega)| = \frac{2\pi}{\omega_s}|sinc(\frac{\pi \omega}{\omega_s})|$\\
+$\phi_{ho}(j\omega) = -\frac{\pi \omega}{\omega_s}+\theta,~~~~\theta = \left \{
+\begin{array}{lr}
+ 	0&sinc(\frac{\pi \omega}{\omega_s})>0\\
+	\pi&sinc(\frac{\pi \omega}{\omega_s})<0
+\end{array} \right.$
+
+\vspace{-2.5in}
+\hspace{2.5in}
+	\includegraphics[width=.4\linewidth]{./Figures/mag_plot.png}
+
+
+
+
+}
+
+%%----------- slide --------------------------------------------------%
+\frame
+{
+
+\small
+
+
+\frametitle{Zero-Order Hold}
+
+Note: $G^*_{ho}(s)= (1-e^{-TS}) [\frac{1}{s}]^* = (1-e^{-TS}) \frac{1}{1-e^{-TS}}=1$ or $G_{ho}(z)=1$.  Why does this make sense? \\ \vspace{.06in}
+
+\textcolor{red}{ Example:}\\
+
+Consider $e(t) = 5sin(\omega t)$ sampled at $T= \frac{\pi}{6}$ (or $\omega_s=12~Rad/sec$)  and reconstructed with ZOH.  Find the magnitude and phase of $\bar e(t)$ for a) $\omega = 3~ Rad/sec$, b) $\omega=15~Rad/sec$\\ \vspace{.1in}
+We have $\bar{E}(\omega)= E^*(\omega)G_{ho}(j\omega)$ where $E^*(\omega)$ is related to $E(\omega)$ as $E^*(\omega) = \frac{1}{T}\sum\limits_{n=-\infty}^{\infty} E(\omega +n \omega_s)$ and
+
+a) $\omega = 3~ Rad/sec$ (below $\omega_s/2$ hence little attenuation) \\
+$|G_{ho}(j\omega)|_{\omega = 3} = \frac{\pi}{6} sinc(\frac{\pi \omega}{\omega_s}) = \frac{\pi}{6}\frac{sin(\pi/4)}{\pi/4}$\\
+$|\bar e(t)| = |e^*(t)G_{ho}(j3)|=5 \frac{sin(\pi/4)}{\pi/4} \approx 4.5 $ \\
+$\phi_{ho}(j3) = -\pi \omega/\omega_s = -\pi/4$ \\ \vspace{.1in}
+
+b) $\omega = 15~ Rad/sec$ (above $\omega_s$ hence more attenuation)\\
+$|G_{ho}(j\omega)|_{\omega=15} = \frac{\pi}{6} sinc(\frac{\pi \omega}{\omega_s}) = \frac{\pi}{6} \frac{sin(5 \pi/4)}{5\pi/4}$\\
+$|\bar e(t)|  \approx 0.9$
+
+$\phi_{ho}(j15) = -\pi \omega/\omega_s +\pi = -5 \pi/4+\pi = -\pi/4$
+
+
+
+}
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\renewcommand{\theenumi}{\alph{enumi}}
+\frametitle{First-Order Hold}
+
+First-order hold (FOH)implements the first two terms in the expansion. That is,
+\\ \vspace{0.1in}
+
+	$\bar e(t) = e(nT) + e^{(1)}(nT)(t-nT) ~~~~~ \text{when}~~ nT \leq t< (n+1)T$\\ \vspace{0.05in}
+where	$e^{(1)}(nT) = \frac{[e(nT) -e((n-1)T)]}{T}$ \\ \vspace{0.05in}
+Thus, the input-output equation of FOH is \\ \vspace{0.05in}
+	$\bar e(t) = e(nT) + \frac{[e(nT) -e((n-1)T]}{T}(t-nT)$\\ \vspace{0.05in}
+
+	For $ n=0$\\
+$ \bar e(t) = e(0) + \frac{[e(0)-e(-T)]t}{T} = 1+\frac{[1-0]t}{T} = 1+t/T,~~0 \le t <T$\\ \vspace{0.05in}
+	For $n=1 $\\
+$\bar e(t) = e(1) + \frac{[e(1) - e(0)](t-T)}{T} =-\frac{1}{T}(t-T) = 1-t/T,~~T\le t<2T$\\ \vspace{0.05in}
+	For $n>1$ $ \bar e(t) = 0,~~ t\ge 2T$\\ \vspace{.05in}
+Thus,\\
+$g_{h1}(t) = \left \{
+\begin{array}{cc}
+	1+t/T& 0 \le t<T\\	
+	1-t/T &T \le t<2T\\
+	0 & t \ge 2T
+\end{array}  \right.$ \\
+
+
+
+\vspace{-.7in}
+\hspace{2.2in}
+\includegraphics[width=.5\linewidth]{./Figures/foh_diagram.png} \\
+
+}
+
+%----------- slide --------------------------------------------------%
+\frame
+{
+
+\frametitle{First-Order Hold}
+\small
+\vspace{-.2in}	
+Alternatively, $g_{h1}(t)$ can be expressed as, \\
+$g_{h1}(t) = (1+\frac{t}{T})u_s(t) - 2(1+\frac{t-T}{T}) u_s(t-T) +(1-\frac{t-T}{T})u_s(t-2T)$\\ \vspace{.07in}
+Take Laplace transform and use  the shifting property:\\
+$G_{h1}(s) = \frac{1+Ts}{T}\left(\frac{1-e^{-Ts}}{s}\right )^2$\\ \vspace{.07in}
+\textbf{Note:}  Similar to ZOH $G^*_{h1}(s)=1$. \\
+Let $s=j\omega$, then the magnitude and phase responses:\\ \vspace{.07in}
+$G_{h1}(\omega) = \frac{1+j\omega T}{T}\left(\frac{1-e^{-j\omega T}}{j\omega}\right )^2$\\ \vspace{.09in}
+$|G_{h1}(\omega)| =\frac{2\pi}{\omega_s} \sqrt{1+\frac{4\pi^2\omega^2}{\omega_{s}^2}}sinc^2(\pi \omega/\omega_s)$\\ \vspace{.09in}
+$\phi_{h1}(\omega) = \tan^{-1} \frac{2\pi \omega}{\omega_s}-\frac{2\pi \omega}{\omega_s}$\\ \vspace{.09in}
+\textcolor{red}{Remarks:}\\
+\begin{itemize}
+	\item FOH better than ZOH for $\omega < \omega_s/2$
+	\item ZOH better for $\omega \ge \omega_s/2$
+	\item ZOH has linear phase (better)
+	\item FOH uses one delay $\implies$ less stable
+\end{itemize}
+\vspace{-2in}
+\hspace{3in}
+\includegraphics[width=.3\linewidth]{./Figures/foh_plot2.png}
+
+
+
+}
+
+
+
+
+%\includegraphics[width=.16\linewidth]{./Figures/sampling_graphs.png}
+
+
+
+
+
+
+
+
+\end{document}
+
