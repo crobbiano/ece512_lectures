@@ -1,8 +1,5 @@
 %% ECE512 lecture 9 and 10
-
 clear all; clc;
-
-
 %% p4.32
 figure(1);clf;
 subplot(2,1,1)
@@ -56,7 +53,7 @@ xlim([-2.5 2.5])
 ylim([0 200])
 set(gca, 'XTick', [-2 0 2],'XTickLabel',{'-2\pi',  '0',  '2\pi'})
 set(gca, 'YTick', [0 100],'YTickLabel',{'0','1/T_s'})
-ylabel('X_s(e^{j\omega})')
+ylabel('X(e^{j\Omega})')
 xlabel('\Omega')
 grid
 
