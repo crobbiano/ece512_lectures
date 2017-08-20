@@ -1,89 +1,101 @@
-%% ECE512 lecture 9 and 10
+%% ECE512 lecture 29 and 30
 
 clear all; clc;
 
 
-%% p4.32
+%% quantizer stairs1
+
+x=[-4.5:4.5];
+y=[-4:5];
 figure(1);clf;
-subplot(2,1,1)
-w=0:.01:pi;
-H=2*cos(2.*w).*exp(-j*2.*w);
-plot(w,abs(H))
-set(gca,'XLim', [0 pi],'XTick',[ 0 pi/4 pi/2 3*pi/4 pi],'XTickLabel',{'0';'\pi/4'; '\pi/2'; '3\pi/4';'\pi'})  % Set phase axis
-set(gca,'YLim', [0 2])  % Set phase axis
+stairs(x,y)
+hold on
+plot([-4:4],[-4:4],'--')
 grid
-xlabel('\omega')
-ylabel('|H(\omega)|')
+xlim([-4 4])
+ylim([-4 4])
+text(1,2.5, '$Q[X_n]=\hat{X}_n$','Interpreter','latex')
+text(.45,-.15, '$\uparrow \frac{2^{-B}}{2}$','Interpreter','latex')
+set(gca, 'XTick', [-4 -3 -2 -1 0 .5 1 2 3 4],'XTickLabel',{'','','','-2^-^B','0','2^-^B','','',''})
+xlabel('X_n')
+%% quantizer stairs2
 
-subplot(2,1,2)
-plot(w,angle(H))
-set(gca,'XLim', [0 pi],'XTick',[ 0 pi/4 pi/2 3*pi/4 pi],'XTickLabel',{'0';'\pi/4'; '\pi/2'; '3\pi/4';'\pi'})  % Set phase axis
-set(gca,'YLim', [-2 2])  % Set phase axis
+x=[-5 -4 -3 -2 -1  0 1 2 3 4 ];
+y=[-4 -3 -2 -1 0 0 1 2 3 4];
+figure(2);clf;
+stairs(x,y)
+hold on
+plot([-4:4],[-4:4],'--')
 grid
-xlabel('\omega')
-ylabel('\theta(\omega)')
+xlim([-4 4])
+ylim([-4 4])
+text(1,2.5, '$Q[X_n]=\hat{X}_n$','Interpreter','latex')
+% text(.45,-.15, '$\uparrow \frac{2^{-B}}{2}$','Interpreter','latex')
+set(gca, 'XTick', [-4 -3 -2 -1 0 1 2 3 4],'XTickLabel',{'','','','-2^-^B','0','2^-^B','','',''})
+xlabel('X_n')
 
-%% triangles1
-%% fft 1
-figure(1); clf;
-magx1=zeros(1,101);
-magx1(51)=100;
-plot(linspace(-10,10,length(magx1)),magx1)
-xlim([-.9 .9])
-ylim([0 200])
-set(gca, 'XTick', [0],'XTickLabel',{ '0'})
-set(gca, 'YTick', [0 100],'YTickLabel',{'0','1'})
-ylabel('X(\omega)')
-xlabel('\omega')
+%% quantizer stairs3
+
+x=[-4.5:4.5];
+y=[-4:5];
+figure(3);clf;
+stairs(x,y)
+hold on
+% plot([-4:4],[-4:4],'--')
 grid
+xlim([-4 4])
+ylim([-4 4])
+text(1,2.5, '$Q[X_n]=\hat{X}_n$','Interpreter','latex')
+% text(.45,-.15, '$\uparrow \frac{2^{-B}}{2}$','Interpreter','latex')
+set(gca, 'XTick', [-4 -3 -2 -1 0 1 2 3 4],'XTickLabel',{'','','','','0','','','',''})
+xlabel('X_n')
+%% quantizer stairs4
 
-
-figure(2); clf;
-magx1(41)=100;magx1(51)=100;magx1(61)=100;
-plot(linspace(-10,10,length(magx1)),magx1)
-xlim([-2.5 2.5])
-ylim([0 200])
-set(gca, 'XTick', [-2 0 2],'XTickLabel',{'-2\pi/T_s',  '0',  '2\pi/T_s'})
-set(gca, 'YTick', [0 100],'YTickLabel',{'0','1/T_s'})
-ylabel('X_s(\omega)')
-xlabel('\omega')
+x=[-4:4];
+y=[-4:4];
+figure(4);clf;
+stairs(x,y)
+hold on
+plot([-4:4],[-4:4],'--')
 grid
-
-figure(3); clf;
-magx1(41)=100;magx1(51)=100;magx1(61)=100;
-plot(linspace(-10,10,length(magx1)),magx1)
-xlim([-2.5 2.5])
-ylim([0 200])
-set(gca, 'XTick', [-2 0 2],'XTickLabel',{'-2\pi',  '0',  '2\pi'})
-set(gca, 'YTick', [0 100],'YTickLabel',{'0','1/T_s'})
-ylabel('X_s(e^{j\omega})')
-xlabel('\Omega')
-grid
-
-%% stem1
-figure(4); clf;
-N=5;
-x=[-N-2 -N-1 -N -2 -1 0 1 2 N N+1 N+2];
-y=[ 0 0 1 1 1 1 1 1 1 0 0]
-stem(x,y)
-ylim([0 2])
-xlim([-N-3 N+3])
-set(gca, 'XTick', [-N 0 N ],'XTickLabel',{'-N', '0', 'N'})
-text(-4, .5, '. . . . .')
-text(3, .5, '. . . . .')
-xlabel('n')
-ylabel('x(n)')
-
-%% sinc1
+xlim([-4 4])
+ylim([-4 4])
+text(1,2.5, '$Q[X_n]=\hat{X}_n$','Interpreter','latex')
+% text(.45,-.15, '$\uparrow \frac{2^{-B}}{2}$','Interpreter','latex')
+set(gca, 'XTick', [-4 -3 -2 -1 0 1 2 3 4],'XTickLabel',{'','','','','0','','','',''})
+xlabel('X_n')
+%% input1
+x=[-4 -3 -3 -2 -1 0 1 2 3 3 4];
+y=[0 0 1 1 1 1 1 1 1 0 0];
 figure(5);clf;
-N=3;
-O=-3*pi:.1:3*pi;
-f=sin(O.*(N-.5))./sin(O./2);
-plot(O, f)
-ylim([-2 6])
-xlim([-2.2*pi 2.2*pi])
-set(gca, 'XTick', [-2*pi -pi 0 pi 2*pi ],'XTickLabel',{'-2\pi', '-\pi', '0', '\pi', '2\pi'})
-set(gca, 'YTick', [0 5],'YTickLabel',{'0','2N+1'})
-xlabel('\Omega')
-ylabel('X(e^{j\Omega})')
+stairs(x,y)
+ylim([-.1 1.1])
+text(.2,.9, '$P_e(x)$','Interpreter','latex')
+set(gca, 'XTick', [-3 0 3],'XTickLabel',{'-2^-^B/2','0','2^-^B/2'})
+set(gca, 'YTick', [0 1],'YTickLabel',{'0','1/2^-^B'})
 grid
+xlabel('x')
+%% input2
+x=[-4 -3 -3 -2 -1 0 0 1 2  3 4];
+y=[0 0 1 1 1 0 0 0 0 0 0];
+figure(6);clf;
+stairs(x,y)
+ylim([-.1 1.1])
+text(.2,.9, '$P_e(x)$','Interpreter','latex')
+set(gca, 'XTick', [-3 0],'XTickLabel',{'-2^-^B/2','0'})
+set(gca, 'YTick', [0 1],'YTickLabel',{'0','1/2^-^B'})
+grid
+xlabel('x')
+%% triangle1
+x=[-2 0 2 -2];
+y=[1 -1 1 1];
+figure(6);clf;
+plot(x,y)
+ ylim([-1.1 1.1])
+ xlim([-2.1 2.1])
+% text(.2,.9, '$P_e(x)$','Interpreter','latex')
+set(gca, 'XTick', [-2 -1 0 1 2],'XTickLabel',{'-2','-1','0','1','2'})
+set(gca, 'YTick', [-1 0 1],'YTickLabel',{'-1','0','1'})
+xlabel('a_1')
+ylabel('a_2')
+patch( [-2 0, 0 2],[1 -1 -1 1], [1 0.8 0.8])
