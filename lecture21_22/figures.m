@@ -47,13 +47,13 @@ grid on
 
 %% rectangular window
 figure(3);clf;
-x=[-5 -4 -4 -3 -2 -1 0 1 2 3 4 4 5];
-y=[0 0 1 1 1 1 1 1 1 1 1 0 0];
+x=[-1 0 0 1 2 3 4 4 5];
+y=[0 0 1 1 1 1 1 0 0];
 plot(x,y)
 ylim([0 1.5])
 xlabel('n')
 ylabel('W_r(n)')
-set(gca, 'XTick', [-4 0 4],'XTickLabel',{'-(N-1)','0','N-1'})
+set(gca, 'XTick', [0 4],'XTickLabel',{'0','N-1'})
 set(gca, 'YTick', [],'YTickLabel',{})
 grid on
 %% window example
