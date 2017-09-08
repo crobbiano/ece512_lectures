@@ -103,10 +103,11 @@ ylim([0 1.3])
 set(gca, 'XTick', [-1  1],'XTickLabel',{'-2\pi','2\pi'})
 set(gca, 'YTick', [],'YTickLabel',{})
 
-h=text(-1.8, .35,'1/2 X(e^j^\Omega^+^\pi)')
-set(h,'Rotation',47);
-h=text(-.5, .65,'1/2 X(e^j^\Omega)')
-set(h,'Rotation',47);
+
+h=text(1.2, 1.05,'$$\frac{1}{2} X(e^{j\frac{\Omega+\pi}{2}})$$','Interpreter','latex')
+% set(h,'Rotation',47);
+h=text(.1, 1.05,'$$\frac{1}{2} X(e^{j\frac{\Omega}{2}})$$','Interpreter','latex')
+% set(h,'Rotation',47);
 grid
 
 patch( [-.98 -.5 -.02],[0 .48 0], [1 0.8 0.8])
