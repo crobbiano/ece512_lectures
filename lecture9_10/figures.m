@@ -38,9 +38,9 @@ stem(x,y)
 xlim([-1 6])
 ylim([0 4])
 xlabel('n, N=3')
-text(3,3.1,'3 mod 3','rotation',40)
-text(4,2.1,'3 mod 4','rotation',40)
-text(5,1.1,'3 mod 4','rotation',40)
+text(3,3.1,'x(3 mod 3)','rotation',40)
+text(4,2.1,'x(4 mod 3)','rotation',40)
+text(5,1.1,'x(5 mod 3)','rotation',40)
 
 %% circle 1
 figure(3);clf;
